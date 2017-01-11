@@ -123,6 +123,16 @@ for version in "${versions[@]}"; do
 		dockerfiles+=( "$version/alpine/Dockerfile" )
 	fi
 
+        if [ -d "$version/alpine-edge" ]; then
+		{ generated_warning; cat Dockerfile-alpine-edge.template; } > "$version/alpine-edge/Dockerfile"
+		cp -v \
+			docker-php-entrypoint \
+			docker-php-ext-* \
+			docker-php-source \
+			"$version/alpine-edge/"
+		dockerfiles+=( "$version/alpine-edge/Dockerfile" )
+	fi
+
 	for target in \
 		apache \
 		fpm fpm/alpine \
